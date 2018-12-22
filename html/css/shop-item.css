@@ -13,3 +13,16 @@ body {
     padding-top: 56px;
   }
 }
+
+.ct-star {
+        display: inline-block;
+        margin: 0 1px;
+        width: 19px;
+        height: 19px;
+        background: url(../img/stars.jpg) no-repeat;
+        vertical-align: -2px;
+        cursor: pointer;
+    }
+.ic-star-off {
+        background-position: -39px 0;
+    }
