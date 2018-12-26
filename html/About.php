@@ -1,5 +1,19 @@
+<?php
+header("Content-type:text/html;charset=utf-8"); 
+
+// Establishing Connection with Server by passing server_name, user_id and password as a parameter
+$connection = new mysqli("localhost", "students", "password","course_site");
+mysqli_query($connection,'set names utf8');
+$errors="";
+
+session_start();// Starting Session
+// Storing Session
+if(isset($_SESSION['user'])){
+$login_session =$_SESSION['user'];
+}
+?>
 <!DOCTYPE html>
-<html lang="en">
+<html>
 
   <head>
 
@@ -23,20 +37,41 @@
     <!-- Navigation -->
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
       <div class="container">
-        <a class="navbar-brand" href="course.html">淘课</a>
+        <a class="navbar-brand" href="course.php">淘课</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
           <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarResponsive">
           <ul class="navbar-nav ml-auto">
             <li class="nav-item">
-              <a class="nav-link" href="../html/index.html">首页</a>
+              <a class="nav-link" href="index.php">首页</a>
             </li>
+<?php 
+	if(!isset($login_session)){
+		$connection->close(); // Closing Connection
+?>
             <li class="nav-item">
-              <a class="nav-link" data-toggle="modal" data-target="#login" href="">登录</a>
+            	<a class="nav-link" data-toggle="modal" data-target="#login" href="">登录</a>
             </li>
+<?php
+	}else{
+?>					
+			<li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          <?php echo $login_session; ?>
+        </a>
+        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+          <a class="dropdown-item" href="#">个人信息</a>
+          <a class="dropdown-item" href="#">消息</a>
+          <div class="dropdown-divider"></div>
+          <a class="dropdown-item" href="logout.php">退出</a>
+        </div>
+      </li>
+<?php			
+	}
+?>
             <li class="nav-item active">
-              <a class="nav-link" href="../html/About.html">关于</a>
+              <a class="nav-link" href="About.php">关于</a>
               <span class="sr-only">(current)</span>
             </li>
           </ul>
@@ -101,25 +136,25 @@
                     <h1 class="text-center">注册</h1>
                 </div>
                 <div class="modal-body">
-                    <form class="form-group" action="">
+                    <form class="form-group" action="register.php" method="post">
                             <div class="form-group">
                                 <label for="">用户名</label>
-                                <input class="form-control" type="text" placeholder="6-15位字母或数字">
+                                <input class="form-control" type="text" placeholder="6-15位字母或数字" name="username">
                             </div>
                             <div class="form-group">
                                 <label for="">密码</label>
-                                <input class="form-control" type="password" placeholder="至少6位字母或数字">
+                                <input class="form-control" type="password" placeholder="至少6位字母或数字" name="password_1">
                             </div>
                             <div class="form-group">
                                 <label for="">再次输入密码</label>
-                                <input class="form-control" type="password" placeholder="至少6位字母或数字">
+                                <input class="form-control" type="password" placeholder="至少6位字母或数字" name="password_2">
                             </div>
                             <div class="form-group">
                                 <label for="">邮箱</label>
-                                <input class="form-control" type="email" placeholder="例如:123@123.com">
+                                <input class="form-control" type="email" placeholder="例如:123@123.com" name="email">
                             </div>
                             <div class="text-right">
-                                <button class="btn btn-primary" type="submit">提交</button>
+                                <button class="btn btn-primary" type="submit" name="reg_user">提交</button>
                                 <button class="btn btn-danger" data-dismiss="modal">取消</button>
                             </div>
                             <a href="" data-toggle="modal" data-dismiss="modal" data-target="#login">已有账号？点我登录</a>
@@ -142,17 +177,17 @@
                     <h1 class="text-center">登录</h1>
                 </div>
                 <div class="modal-body">
-                    <form class="form-group" action="">
+                    <form class="form-group" action="login.php" method="post">
                             <div class="form-group">
                                 <label for="">用户名</label>
-                                <input class="form-control" type="text" placeholder="">
+                                <input class="form-control" type="text" name="username" placeholder="">
                             </div>
                             <div class="form-group">
                                 <label for="">密码</label>
-                                <input class="form-control" type="password" placeholder="">
+                                <input class="form-control" type="password" name="password" placeholder="">
                             </div>
                             <div class="text-right">
-                                <button class="btn btn-primary" type="submit">登录</button>
+                                <button class="btn btn-primary" type="submit" name="submit">登录</button>
                                 <button class="btn btn-danger" data-dismiss="modal">取消</button>
                             </div>
                             <a href="" data-toggle="modal" data-dismiss="modal" data-target="#register">还没有账号？点我注册</a>

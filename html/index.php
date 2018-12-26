@@ -1,5 +1,51 @@
+<?php
+header("Content-type:text/html;charset=utf-8"); 
+
+// Establishing Connection with Server by passing server_name, user_id and password as a parameter
+$connection = new mysqli("localhost", "students", "password","course_site");
+mysqli_query($connection,'set names utf8');
+$errors="";
+
+session_start();// Starting Session
+// Storing Session
+if(isset($_SESSION['user'])){
+$login_session =$_SESSION['user'];
+}
+
+// SQL Query To Fetch Ad
+$index = 1;
+$ses_sql=$connection->query("select src from advertisement where label= '$index'");
+$row = $ses_sql->fetch_assoc();
+$ads1 = $row['src'];
+
+$ses_sql=$connection->query("select title, abstract from article where label= '$index'");
+$row = $ses_sql->fetch_assoc();
+$atrt1 = $row['title'];
+$atra1 = $row['abstract'];
+
+$index = 2;
+$ses_sql=$connection->query("select src from advertisement where label= '$index'");
+$row = $ses_sql->fetch_assoc();
+$ads2 = $row['src'];
+
+$ses_sql=$connection->query("select title, abstract from article where label= '$index'");
+$row = $ses_sql->fetch_assoc();
+$atrt2 = $row['title'];
+$atra2 = $row['abstract'];
+
+$index = 3;
+$ses_sql=$connection->query("select src from advertisement where label= '$index'");
+$row = $ses_sql->fetch_assoc();
+$ads3 = $row['src'];
+
+$ses_sql=$connection->query("select title, abstract from article where label= '$index'");
+$row = $ses_sql->fetch_assoc();
+$atrt3 = $row['title'];
+$atra3 = $row['abstract'];
+?>
+
 <!DOCTYPE html>
-<html lang="en">
+<html>
 
   <head>
 
@@ -23,22 +69,43 @@
     <!-- Navigation -->
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
       <div class="container">
-        <a class="navbar-brand" href="course.html">淘课</a>
+        <a class="navbar-brand" href="course.php">淘课</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
           <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarResponsive">
           <ul class="navbar-nav ml-auto">
             <li class="nav-item active">
-              <a class="nav-link" href="../html/index.html">首页
+              <a class="nav-link" href="index.php">首页
                 <span class="sr-only">(current)</span>
               </a>
-            </li>
+            </li>            
+<?php 
+	if(!isset($login_session)){
+		$connection->close(); // Closing Connection
+?>
             <li class="nav-item">
             	<a class="nav-link" data-toggle="modal" data-target="#login" href="">登录</a>
             </li>
+<?php
+	}else{
+?>					
+			<li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          <?php echo $login_session; ?>
+        </a>
+        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+          <a class="dropdown-item" href="#">个人信息</a>
+          <a class="dropdown-item" href="#">消息</a>
+          <div class="dropdown-divider"></div>
+          <a class="dropdown-item" href="logout.php">退出</a>
+        </div>
+      </li>
+<?php			
+	}
+?>
             <li class="nav-item">
-              <a class="nav-link" href="../html/About.html">关于</a>
+              <a class="nav-link" href="About.php">关于</a>
             </li>
           </ul>
         </div>
@@ -58,13 +125,13 @@
             </ol>
             <div class="carousel-inner" role="listbox">
               <div class="carousel-item active">
-                <img class="d-block img-fluid" src="img/广告1.jpg" alt="First slide">
+                <img class="d-block img-fluid" src="<?php echo $ads1?>" alt="First slide">
               </div>
               <div class="carousel-item">
-                <img class="d-block img-fluid" src="img/广告2.png" alt="Second slide">
+                <img class="d-block img-fluid" src="<?php echo $ads2?>" alt="Second slide">
               </div>
               <div class="carousel-item">
-                <img class="d-block img-fluid" src="img/广告3.png" alt="Third slide">
+                <img class="d-block img-fluid" src="<?php echo $ads3?>" alt="Third slide">
               </div>
             </div>
             <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
@@ -84,7 +151,7 @@
               <div class="input-group">
                 <input type="text" class="form-control" placeholder="走进性科学">
                 <span class="input-group-btn">
-                  <a class="btn btn-primary" href="course.html">淘课！</a>
+                  <a class="btn btn-primary" href="course.php">淘课！</a>
                 </span>
               </div>
       
@@ -105,8 +172,8 @@
         <div class="col-md-4 mb-4">
           <div class="card h-100">
             <div class="card-body">
-              <h2 class="card-title">马化腾</h2>
-              <p class="card-text">马化腾，1971年10月29日生于原广东省海南岛东方市八所港（今海南省东方市），祖籍广东省汕头市。腾讯公司主要创办人之一。现任腾讯公司董事会主席兼首席执行官；全国青联副主席；全国人大代表。</p>
+              <h2 class="card-title"><?php echo $atrt1;?></h2>
+              <p class="card-text"><?php echo $atra1?></p>
             </div>
             <div class="card-footer">
               <a href="#" class="btn btn-primary">了解一下</a>
@@ -117,8 +184,8 @@
         <div class="col-md-4 mb-4">
           <div class="card h-100">
             <div class="card-body">
-              <h2 class="card-title">张志东</h2>
-              <p class="card-text">张志东，广东东莞人，腾讯创办人之一，腾讯高级副总裁兼科技总裁，于1993年取得深圳大学理学学士学位，并于1996年取得华南理工大学计算机应用及系统架构硕士学位，在电信及互联网行业拥有多年经验，1998年创立腾讯。</p>
+              <h2 class="card-title"><?php echo $atrt2?></h2>
+              <p class="card-text"><?php echo $atra2?></p>
             </div>
             <div class="card-footer">
               <a href="#" class="btn btn-primary">了解一下</a>
@@ -129,8 +196,8 @@
         <div class="col-md-4 mb-4">
           <div class="card h-100">
             <div class="card-body">
-              <h2 class="card-title">许晨晔</h2>
-              <p class="card-text">许晨晔，男，1996年取得南京大学计算机应用硕士学位。腾讯公司首席信息官。许先生是主要创办人之一，自1999年起受雇于本集团，全面负责网站财产和社区、客户关系及公共关系的策略规划和发展工作。出任现职前，许先生曾在深圳数据通信局任职，累积丰富软件系统设计、网络管理和市场推广及销售管理经验。</p>
+              <h2 class="card-title"><?php echo $atrt3?></h2>
+              <p class="card-text"><?php echo $atra3?></p>
             </div>
             <div class="card-footer">
               <a href="#" class="btn btn-primary">了解一下</a>
@@ -166,25 +233,25 @@
                     <h1 class="text-center">注册</h1>
                 </div>
                 <div class="modal-body">
-                    <form class="form-group" action="">
+                    <form class="form-group" action="register.php" method="post">
                             <div class="form-group">
                                 <label for="">用户名</label>
-                                <input class="form-control" type="text" placeholder="6-15位字母或数字">
+                                <input class="form-control" type="text" placeholder="6-15位字母或数字" name="username">
                             </div>
                             <div class="form-group">
                                 <label for="">密码</label>
-                                <input class="form-control" type="password" placeholder="至少6位字母或数字">
+                                <input class="form-control" type="password" placeholder="至少6位字母或数字" name="password_1">
                             </div>
                             <div class="form-group">
                                 <label for="">再次输入密码</label>
-                                <input class="form-control" type="password" placeholder="至少6位字母或数字">
+                                <input class="form-control" type="password" placeholder="至少6位字母或数字" name="password_2">
                             </div>
                             <div class="form-group">
                                 <label for="">邮箱</label>
-                                <input class="form-control" type="email" placeholder="例如:123@123.com">
+                                <input class="form-control" type="email" placeholder="例如:123@123.com" name="email">
                             </div>
                             <div class="text-right">
-                                <button class="btn btn-primary" type="submit">提交</button>
+                                <button class="btn btn-primary" type="submit" name="reg_user">提交</button>
                                 <button class="btn btn-danger" data-dismiss="modal">取消</button>
                             </div>
                             <a href="" data-toggle="modal" data-dismiss="modal" data-target="#login">已有账号？点我登录</a>
@@ -207,17 +274,17 @@
                     <h1 class="text-center">登录</h1>
                 </div>
                 <div class="modal-body">
-                    <form class="form-group" action="">
+                    <form class="form-group" action="login.php" method="post">
                             <div class="form-group">
                                 <label for="">用户名</label>
-                                <input class="form-control" type="text" placeholder="">
+                                <input class="form-control" type="text" name="username" placeholder="">
                             </div>
                             <div class="form-group">
                                 <label for="">密码</label>
-                                <input class="form-control" type="password" placeholder="">
+                                <input class="form-control" type="password" name="password" placeholder="">
                             </div>
                             <div class="text-right">
-                                <button class="btn btn-primary" type="submit">登录</button>
+                                <button class="btn btn-primary" type="submit" name="submit">登录</button>
                                 <button class="btn btn-danger" data-dismiss="modal">取消</button>
                             </div>
                             <a href="" data-toggle="modal" data-dismiss="modal" data-target="#register">还没有账号？点我注册</a>

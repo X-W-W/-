@@ -1,3 +1,18 @@
+<?php
+header("Content-type:text/html;charset=utf-8"); 
+
+// Establishing Connection with Server by passing server_name, user_id and password as a parameter
+$connection = new mysqli("localhost", "students", "password","course_site");
+mysqli_query($connection,'set names utf8');
+$errors="";
+
+session_start();// Starting Session
+// Storing Session
+if(isset($_SESSION['user'])){
+$login_session =$_SESSION['user'];
+}
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -30,13 +45,34 @@
 				<div class="collapse navbar-collapse" id="navbarResponsive">
 					<ul class="navbar-nav ml-auto">
 						<li class="nav-item">
-							<a class="nav-link" href="../html/index.html">首页</a>
+							<a class="nav-link" href="index.php">首页</a>
 						</li>
+<?php 
+	if(!isset($login_session)){
+		$connection->close(); // Closing Connection
+?>
+            <li class="nav-item">
+            	<a class="nav-link" data-toggle="modal" data-target="#login" href="">登录</a>
+            </li>
+<?php
+	}else{
+?>	
+			<li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          <?php echo $login_session; ?>
+        </a>
+        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+          <a class="dropdown-item" href="#">个人信息</a>
+          <a class="dropdown-item" href="#">消息</a>
+          <div class="dropdown-divider"></div>
+          <a class="dropdown-item" href="logout.php">退出</a>
+        </div>
+      </li>
+<?php			
+	}
+?>
 						<li class="nav-item">
-							<a class="nav-link" data-toggle="modal" data-target="#login" href="">登录</a>
-						</li>
-						<li class="nav-item">
-							<a class="nav-link" href="../html/About.html">关于</a>
+							<a class="nav-link" href="About.php">关于</a>
 						</li>
 					</ul>
 				</div>
@@ -56,7 +92,7 @@
 				<div class="input-group">
 					<input type="text" class="form-control" placeholder="走进性科学">
 					<span class="input-group-btn">
-            			<a class="btn btn-primary" href="course-detail.html">淘一淘</a>
+            			<a class="btn btn-primary" href="course-detail.php">淘一淘</a>
           			</span>
 				</div>
 			</div>
