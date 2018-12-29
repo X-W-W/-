@@ -18,35 +18,20 @@ $ses_sql=$connection->query("select src from advertisement where label= '$index'
 $row = $ses_sql->fetch_assoc();
 $ads1 = $row['src'];
 
-$ses_sql=$connection->query("select title, abstract from article where label= '$index'");
-$row = $ses_sql->fetch_assoc();
-$atrt1 = $row['title'];
-$atra1 = $row['abstract'];
-
 $index = 2;
 $ses_sql=$connection->query("select src from advertisement where label= '$index'");
 $row = $ses_sql->fetch_assoc();
 $ads2 = $row['src'];
 
-$ses_sql=$connection->query("select title, abstract from article where label= '$index'");
-$row = $ses_sql->fetch_assoc();
-$atrt2 = $row['title'];
-$atra2 = $row['abstract'];
-
 $index = 3;
 $ses_sql=$connection->query("select src from advertisement where label= '$index'");
 $row = $ses_sql->fetch_assoc();
 $ads3 = $row['src'];
-
-$ses_sql=$connection->query("select title, abstract from article where label= '$index'");
-$row = $ses_sql->fetch_assoc();
-$atrt3 = $row['title'];
-$atra3 = $row['abstract'];
 ?>
 
 <!DOCTYPE html>
 <html>
-
+	
   <head>
 
     <meta charset="utf-8">
@@ -82,7 +67,6 @@ $atra3 = $row['abstract'];
             </li>            
 <?php 
 	if(!isset($login_session)){
-		$connection->close(); // Closing Connection
 ?>
             <li class="nav-item">
             	<a class="nav-link" data-toggle="modal" data-target="#login" href="">登录</a>
@@ -124,7 +108,7 @@ $atra3 = $row['abstract'];
               <li data-target="#carouselExampleIndicators" data-slide-to="2"></li>
             </ol>
             <div class="carousel-inner" role="listbox">
-              <div class="carousel-item active">
+            	<div class="carousel-item active">
                 <img class="d-block img-fluid" src="<?php echo $ads1?>" alt="First slide">
               </div>
               <div class="carousel-item">
@@ -132,7 +116,7 @@ $atra3 = $row['abstract'];
               </div>
               <div class="carousel-item">
                 <img class="d-block img-fluid" src="<?php echo $ads3?>" alt="Third slide">
-              </div>
+              </div>              
             </div>
             <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
               <span class="carousel-control-prev-icon" aria-hidden="true"></span>
@@ -169,7 +153,14 @@ $atra3 = $row['abstract'];
       
       <!-- Content Row -->
       <div class="row">
-        <div class="col-md-4 mb-4">
+      	<?php
+      		for($index = 1;$index <= 3;$index++){
+      			$ses_sql=$connection->query("select title, abstract from article where label= '$index'");
+						$row = $ses_sql->fetch_assoc();
+						$atrt1 = $row['title'];
+						$atra1 = $row['abstract'];
+      	?>
+      	<div class="col-md-4 mb-4">
           <div class="card h-100">
             <div class="card-body">
               <h2 class="card-title"><?php echo $atrt1;?></h2>
@@ -181,31 +172,8 @@ $atra3 = $row['abstract'];
           </div>
         </div>
         <!-- /.col-md-4 -->
-        <div class="col-md-4 mb-4">
-          <div class="card h-100">
-            <div class="card-body">
-              <h2 class="card-title"><?php echo $atrt2?></h2>
-              <p class="card-text"><?php echo $atra2?></p>
-            </div>
-            <div class="card-footer">
-              <a href="#" class="btn btn-primary">了解一下</a>
-            </div>
-          </div>
-        </div>
-        <!-- /.col-md-4 -->
-        <div class="col-md-4 mb-4">
-          <div class="card h-100">
-            <div class="card-body">
-              <h2 class="card-title"><?php echo $atrt3?></h2>
-              <p class="card-text"><?php echo $atra3?></p>
-            </div>
-            <div class="card-footer">
-              <a href="#" class="btn btn-primary">了解一下</a>
-            </div>
-          </div>
-        </div>
-        <!-- /.col-md-4 -->
-
+      	<?php
+      	}?>
       </div>
       <!-- /.row -->
 
@@ -293,7 +261,9 @@ $atra3 = $row['abstract'];
             </div>
         </div>
     </div>
-    
+<?php 
+	$connection->close(); // Closing Connection
+?>  
     <!-- Bootstrap core JavaScript -->
     <script src="vendor/jquery/jquery.min.js"></script>
     <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>

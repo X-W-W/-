@@ -1,3 +1,26 @@
+<?php
+header("Content-type:text/html;charset=utf-8"); 
+
+// Establishing Connection with Server by passing server_name, user_id and password as a parameter
+$connection = new mysqli("localhost", "students", "password","course_site");
+mysqli_query($connection,'set names utf8');
+$errors="";
+
+session_start();// Starting Session
+// Storing Session
+if(isset($_SESSION['user'])){
+$login_session =$_SESSION['user'];
+}
+
+if(isset($_SESSION['search'])){
+$search_session = $_SESSION['search'];
+$ses_sql=$connection->query("select * from course where id = '$search_session'");
+$row = $ses_sql->fetch_assoc();
+$coursename = $row['coursename'];
+$info = $row['info'];
+$cover = $row['thumbnail'];
+}
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -23,20 +46,40 @@
 		<!-- Navigation -->
 		<nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
 			<div class="container">
-				<a class="navbar-brand" href="course.html">淘课</a>
+				<a class="navbar-brand" href="course.php">淘课</a>
 				<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
           <span class="navbar-toggler-icon"></span>
         </button>
 				<div class="collapse navbar-collapse" id="navbarResponsive">
 					<ul class="navbar-nav ml-auto">
 						<li class="nav-item">
-							<a class="nav-link" href="../html/index.html">首页</a>
+							<a class="nav-link" href="index.php">首页</a>
 						</li>
+<?php 
+	if(!isset($login_session)){
+?>
+            <li class="nav-item">
+            	<a class="nav-link" data-toggle="modal" data-target="#login" href="">登录</a>
+            </li>
+<?php
+	}else{
+?>					
+			<li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          <?php echo $login_session; ?>
+        </a>
+        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+          <a class="dropdown-item" href="#">个人信息</a>
+          <a class="dropdown-item" href="#">消息</a>
+          <div class="dropdown-divider"></div>
+          <a class="dropdown-item" href="logout.php">退出</a>
+        </div>
+      </li>
+<?php			
+	}
+?>
 						<li class="nav-item">
-							<a class="nav-link" data-toggle="modal" data-target="#login" href="">登录</a>
-						</li>
-						<li class="nav-item">
-							<a class="nav-link" href="../html/About.html">关于</a>
+							<a class="nav-link" href="About.php">关于</a>
 						</li>
 					</ul>
 				</div>
@@ -49,7 +92,7 @@
 			<div class="row">
 
 				<div class="col-lg-3">
-					<h1 class="my-4">程序设计基础</h1>
+					<h1 class="my-4"><?php echo $coursename?></h1>
 					<div class="list-group">
 						<a href="#class-info" class="list-group-item active">课程简介</a>
 						<a href="#booklist" class="list-group-item">课程书目</a>
@@ -61,11 +104,11 @@
 				<div class="col-lg-9">
 
 					<div class="card mt-4" id="class-info">
-						<img class="card-img-top img-fluid" src="img/程序设计基础.jpg" alt="">
+						<img class="card-img-top img-fluid" src="<?php echo $cover?>" alt="">
 						<div class="card-body">
-							<h3 class="card-title">程序设计基础</h3>
-							<h4>张小健</h4>
-							<p class="card-text">随着信息产业的迅速发展，软件人才的需求量越来越大。程序设计是软件人才必备的基础知识和技能。 程序设计基础是一门理论与实践密切相关、以培养学生程序设计能力为目标的课程。如何消除学生学习程序设计的畏难情绪，使学生顺利进入程序设计的大门，逐步掌握程序设计思想和方法，提高实践动手能力，是本课程教学的难点。 程序设计既是科学，又是艺术。学习程序设计是一件非常辛苦的事情，要有非常强的耐心和实践精神，需要花费大量的时间，不可能一蹴而就，必须从某个起点开始循序渐进地学习。</p>
+							<h3 class="card-title"><?php echo $coursename?></h3>
+							<!--<h4>张小健</h4>-->
+							<p class="card-text"><?php echo $info?></p>
 							<span class="text-warning">&#9733; &#9733; &#9733; &#9733; &#9734;</span> 4.0 stars
 						</div>
 					</div>
@@ -76,16 +119,18 @@
 							课程评价
 						</div>
 						<div class="card-body">
-							<p>强推强推强推~讲课讲得很好~又风趣幽默~上课当堂敲代码~能让你学到解题的思路~实验不算难~但有限时完成~</p>
-							<small class="text-muted">Posted by xxx on 2018-12-25</small>
-							<hr>
-							<p>大学第一节课就爱上张小健！！！很有趣，有时上课会讲很多故事而且并不会让我觉得在浪费时间！！！不用ppt 上课认真听做笔记下课翻翻书so easy～总之超级喜欢他！！从来不点名！！去上课的都是真爱！！</p>
-							<small class="text-muted">Posted by xxx on 2018-11-11</small>
-							<hr>
-							<p>放羊式教学，讲课有趣，通俗易懂，缺点只是实验课上指导会比较少，基本上交给师兄，个人认为这个无法怪他，总体还是挺喜欢的</p>
-							<small class="text-muted">Posted by xxx on 2018-10-01</small>
+							<?php 
+								$ses_sql=$connection->query("select text, username, date from comment where course_id = '$search_session'");
+								while($row = $ses_sql->fetch_assoc()){
+							?>
+								<p><?php echo $row['text']?></p>
+								<small class="text-muted">Posted by <?php echo $row['username']?> on <?php echo $row['date']?></small>
+								<hr>
+							<?php	
+							}
+							?>
 							<a href="#" name="booklist"></a>
-							<hr>
+
 							<div class="card my-4">
 								<h5 class="card-header">您的评价：</h5>
 								<div class="card-body">
@@ -114,12 +159,15 @@
 								课程书目
 							</div>
 							<div class="card-body">
-								<p>c语言程序设计</p>
+								<?php 
+								$ses_sql=$connection->query("select bookname from textbook where course_id = '$search_session'");
+								while($row = $ses_sql->fetch_assoc()){
+								?>
+								<p><?php echo $row['bookname']?></p>
 								<hr>
-								<p>book1</p>
-								<hr>
-								<p>book1</p>
-								<hr>
+								<?php	
+								}
+								?>
 							</div>
 						</div>
 						<!-- /.card -->
@@ -128,15 +176,18 @@
 							<div class="card-header">
 								课程资源
 							</div>
+							
 							<div class="card-body">
-								<a href="#">textbook.pdf</a>
-								<small class="text-muted">sumited on 25/12/18</small>
+								<?php 
+								$ses_sql=$connection->query("select href, resource_name, updatedate from eresource where course_id = '$search_session'");
+								while($row = $ses_sql->fetch_assoc()){
+								?>
+								<a href="<?php echo $row['href']?>"><?php echo $row['resource_name']?></a>
+								<small class="text-muted">sumited on <?php echo $row['updatedate']?></small>
 								<hr>
-								<a href="#">textbook.pdf</a>
-								<small class="text-muted">sumited on 25/12/18</small>
-								<hr>
-								<a href="#">textbook.pdf</a>
-								<small class="text-muted">sumited on 25/12/18</small>
+								<?php	
+								}
+								?>
 							</div>
 						</div>
 						<!-- /.card -->
@@ -160,79 +211,81 @@
 		</footer>
 
 		<!-- 注册窗口 -->
-		<div id="register" class="modal fade" tabindex="-1">
-			<div class="modal-dialog">
-				<div class="modal-content">
-					<div class="modal-body">
-						<button class="close" data-dismiss="modal">
-                        <span>&times;</span>
-                    </button>
-					</div>
-					<div class="modal-title">
-						<h1 class="text-center">注册</h1>
-					</div>
-					<div class="modal-body">
-						<form class="form-group" action="">
-							<div class="form-group">
-								<label for="">用户名</label>
-								<input class="form-control" type="text" placeholder="6-15位字母或数字">
-							</div>
-							<div class="form-group">
-								<label for="">密码</label>
-								<input class="form-control" type="password" placeholder="至少6位字母或数字">
-							</div>
-							<div class="form-group">
-								<label for="">再次输入密码</label>
-								<input class="form-control" type="password" placeholder="至少6位字母或数字">
-							</div>
-							<div class="form-group">
-								<label for="">邮箱</label>
-								<input class="form-control" type="email" placeholder="例如:123@123.com">
-							</div>
-							<div class="text-right">
-								<button class="btn btn-primary" type="submit">提交</button>
-								<button class="btn btn-danger" data-dismiss="modal">取消</button>
-							</div>
-							<a href="" data-toggle="modal" data-dismiss="modal" data-target="#login">已有账号？点我登录</a>
-						</form>
-					</div>
-				</div>
-			</div>
-		</div>
-
-		<!-- 登录窗口 -->
-		<div id="login" class="modal fade">
-			<div class="modal-dialog">
-				<div class="modal-content">
-					<div class="modal-body">
-						<button class="close" data-dismiss="modal">
-                        <span>&times;</span>
-                    </button>
-					</div>
-					<div class="modal-title">
-						<h1 class="text-center">登录</h1>
-					</div>
-					<div class="modal-body">
-						<form class="form-group" action="">
-							<div class="form-group">
-								<label for="">用户名</label>
-								<input class="form-control" type="text" placeholder="">
-							</div>
-							<div class="form-group">
-								<label for="">密码</label>
-								<input class="form-control" type="password" placeholder="">
-							</div>
-							<div class="text-right">
-								<button class="btn btn-primary" type="submit">登录</button>
-								<button class="btn btn-danger" data-dismiss="modal">取消</button>
-							</div>
-							<a href="" data-toggle="modal" data-dismiss="modal" data-target="#register">还没有账号？点我注册</a>
-						</form>
-					</div>
-				</div>
-			</div>
-		</div>
-
+	    <div id="register" class="modal fade" tabindex="-1">
+	        <div class="modal-dialog">
+	            <div class="modal-content">
+	                <div class="modal-body">
+	                    <button class="close" data-dismiss="modal">
+	                        <span>&times;</span>
+	                    </button>
+	                </div>
+	                <div class="modal-title">
+	                    <h1 class="text-center">注册</h1>
+	                </div>
+	                <div class="modal-body">
+	                    <form class="form-group" action="register.php" method="post">
+	                            <div class="form-group">
+	                                <label for="">用户名</label>
+	                                <input class="form-control" type="text" placeholder="6-15位字母或数字" name="username">
+	                            </div>
+	                            <div class="form-group">
+	                                <label for="">密码</label>
+	                                <input class="form-control" type="password" placeholder="至少6位字母或数字" name="password_1">
+	                            </div>
+	                            <div class="form-group">
+	                                <label for="">再次输入密码</label>
+	                                <input class="form-control" type="password" placeholder="至少6位字母或数字" name="password_2">
+	                            </div>
+	                            <div class="form-group">
+	                                <label for="">邮箱</label>
+	                                <input class="form-control" type="email" placeholder="例如:123@123.com" name="email">
+	                            </div>
+	                            <div class="text-right">
+	                                <button class="btn btn-primary" type="submit" name="reg_user">提交</button>
+	                                <button class="btn btn-danger" data-dismiss="modal">取消</button>
+	                            </div>
+	                            <a href="" data-toggle="modal" data-dismiss="modal" data-target="#login">已有账号？点我登录</a>
+	                    </form>
+	                </div>
+	            </div>
+	        </div>
+	    </div>
+	    
+	    <!-- 登录窗口 -->
+	    <div id="login" class="modal fade">
+	        <div class="modal-dialog">
+	            <div class="modal-content">
+	                <div class="modal-body">
+	                    <button class="close" data-dismiss="modal">
+	                        <span>&times;</span>
+	                    </button>
+	                </div>
+	                <div class="modal-title">
+	                    <h1 class="text-center">登录</h1>
+	                </div>
+	                <div class="modal-body">
+	                    <form class="form-group" action="login.php" method="post">
+	                            <div class="form-group">
+	                                <label for="">用户名</label>
+	                                <input class="form-control" type="text" name="username" placeholder="">
+	                            </div>
+	                            <div class="form-group">
+	                                <label for="">密码</label>
+	                                <input class="form-control" type="password" name="password" placeholder="">
+	                            </div>
+	                            <div class="text-right">
+	                                <button class="btn btn-primary" type="submit" name="submit">登录</button>
+	                                <button class="btn btn-danger" data-dismiss="modal">取消</button>
+	                            </div>
+	                            <a href="" data-toggle="modal" data-dismiss="modal" data-target="#register">还没有账号？点我注册</a>
+	                    </form>
+	                </div>
+	            </div>
+	        </div>
+	    </div>
+<?php 
+	$connection->close(); // Closing Connection
+?>  
 		<!-- Bootstrap core JavaScript -->
 		<script src="vendor/jquery/jquery.min.js"></script>
 		<script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>

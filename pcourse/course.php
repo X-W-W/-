@@ -49,7 +49,6 @@ $login_session =$_SESSION['user'];
 						</li>
 <?php 
 	if(!isset($login_session)){
-		$connection->close(); // Closing Connection
 ?>
             <li class="nav-item">
             	<a class="nav-link" data-toggle="modal" data-target="#login" href="">登录</a>
@@ -89,82 +88,41 @@ $login_session =$_SESSION['user'];
 
 			<!-- Search Widget -->
 			<div class="card-body">
-				<div class="input-group">
-					<input type="text" class="form-control" placeholder="走进性科学">
+				<form class="form-group" action="search.php" method="post">
+					<div class="input-group">
+					<input type="text" class="form-control" name="searchText" placeholder="走进性科学">
 					<span class="input-group-btn">
-            			<a class="btn btn-primary" href="course-detail.php">淘一淘</a>
+						<input class="btn btn-primary" type="submit" name="sub" id="searchBtn" value="淘一淘" />
           			</span>
-				</div>
+					</div>
+            	</form>	
 			</div>
 
 			<div class="row">
+				<?php // SQL Query To Fetch Course
+					for($index = 1; $index <= 6; $index++){
+						$ses_sql=$connection->query("select * from course where id = '$index'");
+						$row = $ses_sql->fetch_assoc();
+						$coursename1 = $row['coursename'];
+						$intro1 = $row['intro'];
+						$thumbnail1 = $row['thumbnail'];
+						$src1 = $row['src'];
+				?>
 				<div class="col-lg-4 col-sm-6 portfolio-item">
 					<div class="card h-100">
-						<a href="https://www.icourse163.org/course/FJNU-1001774009"><img class="card-img-top" src="img/走进性科学.jpg" alt=""></a>
+						<a href="<?php echo $src1;?>"><img class="card-img-top" src="<?php echo $thumbnail1;?>" alt=""></a>
 						<div class="card-body">
 							<h4 class="card-title">
-                			<a href="https://www.icourse163.org/course/FJNU-1001774009">走进性科学</a>
+                			<a href="<?php echo $src1?>"><?php echo $coursename1;?></a>
              				</h4>
-							<p class="card-text">《走进性科学》是大学生科学文化素质教育课程，以性生物学、性心理学、性社会学和性教育学等研究性科学发展规律的学科为理论基础，从人类性的生物属性、心理属性和社会属性等三个角度，联系学生生活实际，对大学生进行系统的性教育过程。</p>
+							<p class="card-text"><?php echo $intro1;?></p>
 						</div>
 					</div>
 				</div>
-				<div class="col-lg-4 col-sm-6 portfolio-item">
-					<div class="card h-100">
-						<a href="http://www.icourse163.org/course/NBU-1002336007"><img class="card-img-top" src="img/音乐与健康.jpg" alt=""></a>
-						<div class="card-body">
-							<h4 class="card-title">
-                			<a href="http://www.icourse163.org/course/NBU-1002336007">音乐与健康</a>
-              				</h4>
-							<p class="card-text">音乐是人们日常生活中必不可少的心灵良药，而健康又是人们永恒的追求，那么这两者之间有什么关联之处呢？如何利用音乐来有效帮助人们的健康？本课程以人为本讲解了当下人们十分关注的健康问题。</p>
-						</div>
-					</div>
-				</div>
-				<div class="col-lg-4 col-sm-6 portfolio-item">
-					<div class="card h-100">
-						<a href="https://www.icourse163.org/course/zju-93001"><img class="card-img-top" src="img/数据结构.jpg" alt=""></a>
-						<div class="card-body">
-							<h4 class="card-title">
-                			<a href="https://www.icourse163.org/course/zju-93001">数据结构</a>
-              				</h4>
-							<p class="card-text">“数据结构”是计算机科学与技术专业、软件工程专业甚至于其它电气信息类专业的重要专业基础课程。它所讨论的知识内容和提倡的技术方法，无论对进一步学习计算机领域的其它课程，还是对从事大型信息工程的开发，都是重要而必备的基础。</p>
-						</div>
-					</div>
-				</div>
-				<div class="col-lg-4 col-sm-6 portfolio-item">
-					<div class="card h-100">
-						<a href="http://www.icourse163.org/course/UESTC-1002268006"><img class="card-img-top" src="img/离散数学.png" alt=""></a>
-						<div class="card-body">
-							<h4 class="card-title">
-                			<a href="http://www.icourse163.org/course/UESTC-1002268006">离散数学</a>
-              				</h4>
-							<p class="card-text">离散数学是计算机学科的经典核心基础课程。课程内容主要包括集合论，数理逻辑，关系理论，图论相关内容，为进一步学习计算机科学的基本理论和方法以及之后的专业课打下良好的基础。</p>
-						</div>
-					</div>
-				</div>
-				<div class="col-lg-4 col-sm-6 portfolio-item">
-					<div class="card h-100">
-						<a href="https://www.icourse163.org/course/hit-1001516002"><img class="card-img-top" src="img/数据库系统.png" alt=""></a>
-						<div class="card-body">
-							<h4 class="card-title">
-                			<a href="https://www.icourse163.org/course/hit-1001516002">数据库系统</a>
-              				</h4>
-							<p class="card-text">《数据库系统》不仅是计算机、软件工程等专业的核心课程，而且也是非计算机专业学生必修的信息技术课程。当前互联网+与大数据，一切都建立在数据库之上，以数据说话，首先需要聚集数据、需要分析和管理数据。</p>
-						</div>
-					</div>
-				</div>
-				<div class="col-lg-4 col-sm-6 portfolio-item">
-					<div class="card h-100">
-						<a href="http://www.icourse163.org/course/WHJZY-1003194005"><img class="card-img-top" src="img/Web网站开发.png" alt=""></a>
-						<div class="card-body">
-							<h4 class="card-title">
-                			<a href="http://www.icourse163.org/course/WHJZY-1003194005">Web网站开发</a>
-              				</h4>
-							<p class="card-text">本课程是针对Web网站开发岗位设置的是一门实践性和综合性较强的课程，是结合《网页美工》、《网站前端技术》以及《网站后台技术》知识，手把手教学生从网站规划，网页效果图设计，网站前台设计以及基于数据库技术的网站后台设计，从而构建一个完整的企业网站。</p>
-						</div>
-					</div>
-				</div>
-			</div>
+				<?php
+					}
+				?>	
+			</div>			
 			<!-- /.row -->
 
 			<!-- Pagination -->
@@ -276,11 +234,12 @@ $login_session =$_SESSION['user'];
 				</div>
 			</div>
 		</div>
-
+<?php 
+	$connection->close(); // Closing Connection
+?>  
 		<!-- Bootstrap core JavaScript -->
 		<script src="vendor/jquery/jquery.min.js"></script>
 		<script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 
 	</body>
-
 </html>
