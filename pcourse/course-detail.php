@@ -169,18 +169,8 @@ if (isset($_SESSION['search'])) {
 					              </div>
 					            </div>
 					          </div>
-					          
-						<div class="card-body">
-							<?php 
-								$ses_sql=$connection->query("select text, username, date from comment where course_id = '$search_session'");
-								while($row = $ses_sql->fetch_assoc()){
-							?>
-								<p><?php echo $row['text']?></p>
-								<small class="text-muted">Posted by <?php echo $row['username']?> on <?php echo $row['date']?></small>
-								<hr>
-							<?php
-									}
-							?>
+					         
+						
 
 							
 							<a href="#" name="booklist"></a>
@@ -205,9 +195,11 @@ if (isset($_SESSION['search'])) {
 									</form>
 								</div>
 							</div>
-						</div>
+						
 						<!-- /.card -->
 
+					</div>
+					<!-- /.col-lg-9 -->
 					</div>
 					<!-- /.col-lg-9 -->
 						
@@ -251,8 +243,7 @@ if (isset($_SESSION['search'])) {
 						</div>
 						<!-- /.card -->
 
-					</div>
-					<!-- /.col-lg-9 -->
+					
 
 				</div>
 

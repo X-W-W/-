@@ -141,7 +141,6 @@ $ads3 = $row['src'];
                 	</span>
 					</div>
             	</form>	
-
       
         </div>
         <!-- /.col-md-4 -->
