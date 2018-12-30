@@ -1,24 +1,25 @@
 <?php
-header("Content-type:text/html;charset=utf-8"); 
+header("Content-type:text/html;charset=utf-8");
 
 // Establishing Connection with Server by passing server_name, user_id and password as a parameter
-$connection = new mysqli("localhost", "students", "password","course_site");
-mysqli_query($connection,'set names utf8');
-$errors="";
+$connection = new mysqli("localhost", "students", "password", "course_site");
+mysqli_query($connection, 'set names utf8');
+$errors = "";
 
-session_start();// Starting Session
+session_start();
+// Starting Session
 // Storing Session
-if(isset($_SESSION['user'])){
-$login_session =$_SESSION['user'];
+if (isset($_SESSION['user'])) {
+	$login_session = $_SESSION['user'];
 }
 
-if(isset($_SESSION['search'])){
-$search_session = $_SESSION['search'];
-$ses_sql=$connection->query("select * from course where id = '$search_session'");
-$row = $ses_sql->fetch_assoc();
-$coursename = $row['coursename'];
-$info = $row['info'];
-$cover = $row['thumbnail'];
+if (isset($_SESSION['search'])) {
+	$search_session = $_SESSION['search'];
+	$ses_sql = $connection -> query("select * from course where id = '$search_session'");
+	$row = $ses_sql -> fetch_assoc();
+	$coursename = $row['coursename'];
+	$info = $row['info'];
+	$cover = $row['thumbnail'];
 }
 ?>
 <!DOCTYPE html>
@@ -35,10 +36,9 @@ $cover = $row['thumbnail'];
 
 		<!-- Bootstrap core CSS -->
 		<link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-
+		
 		<!-- Custom styles for this template -->
 		<link href="css/shop-item.css" rel="stylesheet">
-
 	</head>
 
 	<body>
@@ -62,7 +62,7 @@ $cover = $row['thumbnail'];
             	<a class="nav-link" data-toggle="modal" data-target="#login" href="">登录</a>
             </li>
 <?php
-	}else{
+}else{
 ?>					
 			<li class="nav-item dropdown">
         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -75,9 +75,9 @@ $cover = $row['thumbnail'];
           <a class="dropdown-item" href="logout.php">退出</a>
         </div>
       </li>
-<?php			
-	}
-?>
+<?php
+		}
+	?>
 						<li class="nav-item">
 							<a class="nav-link" href="About.php">关于</a>
 						</li>
@@ -126,11 +126,11 @@ $cover = $row['thumbnail'];
 								<p><?php echo $row['text']?></p>
 								<small class="text-muted">Posted by <?php echo $row['username']?> on <?php echo $row['date']?></small>
 								<hr>
-							<?php	
-							}
+							<?php
+									}
 							?>
+							
 							<a href="#" name="booklist"></a>
-
 							<div class="card my-4">
 								<h5 class="card-header">您的评价：</h5>
 								<div class="card-body">
@@ -165,8 +165,8 @@ $cover = $row['thumbnail'];
 								?>
 								<p><?php echo $row['bookname']?></p>
 								<hr>
-								<?php	
-								}
+								<?php
+									}
 								?>
 							</div>
 						</div>
@@ -185,8 +185,8 @@ $cover = $row['thumbnail'];
 								<a href="<?php echo $row['href']?>"><?php echo $row['resource_name']?></a>
 								<small class="text-muted">sumited on <?php echo $row['updatedate']?></small>
 								<hr>
-								<?php	
-								}
+								<?php
+									}
 								?>
 							</div>
 						</div>
@@ -283,53 +283,52 @@ $cover = $row['thumbnail'];
 	            </div>
 	        </div>
 	    </div>
-<?php 
-	$connection->close(); // Closing Connection
-?>  
+<?php
+			$connection -> close();
+			// Closing Connection
+		?>  
 		<!-- Bootstrap core JavaScript -->
 		<script src="vendor/jquery/jquery.min.js"></script>
 		<script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-		<script>
-			$(function() {
-				/*
-				 * 鼠标点击，该元素包括该元素之前的元素获得样式,并给隐藏域input赋值
-				 * 鼠标移入，样式随鼠标移动
-				 * 鼠标移出，样式移除但被鼠标点击的该元素和之前的元素样式不变
-				 * 每次触发事件，移除所有样式，并重新获得样式
-				 * */
-				var stars = $('.stars');
-				var Len = stars.length;
-				//遍历每个评分的容器
-				for(i = 0; i < Len; i++) {
-					//每次触发事件，清除该项父容器下所有子元素的样式所有样式
-					function clearAll(obj) {
-						obj.parent().children('i').removeClass('on');
-					}
-					stars.eq(i).find('i').click(function() {
-						var num = $(this).index();
-						clearAll($(this));
-						//当前包括前面的元素都加上样式
-						$(this).addClass('on').prevAll('i').addClass('on');
-						//给隐藏域input赋值
-						$(this).siblings('input').val(num);
-					});
-					stars.eq(i).find('i').mouseover(function() {
-						var num = $(this).index();
-						clearAll($(this));
-						//当前包括前面的元素都加上样式
-						$(this).addClass('on').prevAll('i').addClass('on');
-					});
-					stars.eq(i).find('i').mouseout(function() {
-						clearAll($(this));
-						//触发点击事件后input有值
-						var score = $(this).siblings('input').val();
-						for(i = 0; i < score; i++) {
-							$(this).parent().find('i').eq(i).addClass('on');
-						}
-					});
-				}
-			})
-		</script>
+		<script>$(function() {
+	/*
+	 * 鼠标点击，该元素包括该元素之前的元素获得样式,并给隐藏域input赋值
+	 * 鼠标移入，样式随鼠标移动
+	 * 鼠标移出，样式移除但被鼠标点击的该元素和之前的元素样式不变
+	 * 每次触发事件，移除所有样式，并重新获得样式
+	 * */
+	var stars = $('.stars');
+	var Len = stars.length;
+	//遍历每个评分的容器
+	for(i = 0; i < Len; i++) {
+		//每次触发事件，清除该项父容器下所有子元素的样式所有样式
+		function clearAll(obj) {
+			obj.parent().children('i').removeClass('on');
+		}
+		stars.eq(i).find('i').click(function() {
+			var num = $(this).index();
+			clearAll($(this));
+			//当前包括前面的元素都加上样式
+			$(this).addClass('on').prevAll('i').addClass('on');
+			//给隐藏域input赋值
+			$(this).siblings('input').val(num);
+		});
+		stars.eq(i).find('i').mouseover(function() {
+			var num = $(this).index();
+			clearAll($(this));
+			//当前包括前面的元素都加上样式
+			$(this).addClass('on').prevAll('i').addClass('on');
+		});
+		stars.eq(i).find('i').mouseout(function() {
+			clearAll($(this));
+			//触发点击事件后input有值
+			var score = $(this).siblings('input').val();
+			for(i = 0; i < score; i++) {
+				$(this).parent().find('i').eq(i).addClass('on');
+			}
+		});
+	}
+})</script>
 	</body>
 
 </html>
