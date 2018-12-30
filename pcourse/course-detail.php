@@ -119,6 +119,7 @@ if (isset($_SESSION['search'])) {
 							课程评价
 						</div>
 
+
 						<div class="card-body">																					
 							<!-- Teachers Widget -->
 					          <div class="card card-outline-secondary my-4" id="class-comment">
@@ -180,7 +181,10 @@ if (isset($_SESSION['search'])) {
 							<?php
 									}
 							?>
-														
+
+							
+							<a href="#" name="booklist"></a>
+
 							<div class="card my-4">
 								<h5 class="card-header">您的评价：</h5>
 								<div class="card-body">
@@ -203,10 +207,12 @@ if (isset($_SESSION['search'])) {
 							</div>
 						</div>
 						<!-- /.card -->
+
 					</div>
 					<!-- /.col-lg-9 -->
 						
 						<a href="#" name="booklist"></a>
+
 						<div class="card card-outline-secondary my-4">
 							<div class="card-header">
 								课程书目
