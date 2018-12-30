@@ -14,12 +14,14 @@ $login_session =$_SESSION['user'];
 
 if(isset($_SESSION['search'])){
 $search_session = $_SESSION['search'];
+}else{
+$search_session = 7;
+}
 $ses_sql=$connection->query("select * from course where id = '$search_session'");
 $row = $ses_sql->fetch_assoc();
 $coursename = $row['coursename'];
 $info = $row['info'];
 $cover = $row['thumbnail'];
-}
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -119,6 +121,7 @@ $cover = $row['thumbnail'];
 							课程评价
 						</div>
 						<div class="card-body">
+							
 							<?php 
 								$ses_sql=$connection->query("select text, username, date from comment where course_id = '$search_session'");
 								while($row = $ses_sql->fetch_assoc()){
@@ -129,8 +132,38 @@ $cover = $row['thumbnail'];
 							<?php	
 							}
 							?>
-							<a href="#" name="booklist"></a>
-
+							
+							
+							<!-- Teachers Widget -->
+					          <div class="card card-outline-secondary my-4" id="class-comment">
+					            <h5 class="card-header">教师列表</h5>
+					            <div class="card-body">
+					              <div class="row">
+					                <div class="col-lg-6">
+					                  <!-- 胶囊菜单 -->
+									    <ul class="nav nav-pills">
+									      <li class="nav-item">
+									        <a class="nav-link active" data-toggle="pill" href="#home">Python</a>
+									      </li>
+									      <li class="nav-item">
+									        <a class="nav-link" data-toggle="pill" href="#menu1">PHP</a>
+									      </li>
+									      <li class="nav-item">
+									        <a class="nav-link" data-toggle="pill" href="#menu2">Perl</a>
+									      </li>
+									    </ul>
+									
+									    <!-- 菜单对应内容 -->
+									    <div class="tab-content">
+									      <div class="tab-pane active container" id="home">Python 是一门解释型、面向对象、动态数据类型的高级程序设计语言</div>
+									      <div class="tab-pane container" id="menu1">PHP 是一种流行的通用脚本语言，特别适合 Web 开发</div>
+									      <div class="tab-pane container" id="menu2">Perl 又名实用报表提取语言， 是 Practical Extraction and Report Language 的缩写</div>
+									    </div>
+					                </div>
+					              </div>
+					            </div>
+					          </div>
+					          
 							<div class="card my-4">
 								<h5 class="card-header">您的评价：</h5>
 								<div class="card-body">
@@ -153,7 +186,9 @@ $cover = $row['thumbnail'];
 							</div>
 						</div>
 						<!-- /.card -->
-
+					</div>
+					<!-- /.col-lg-9 -->
+					<a href="#" name="booklist"></a>
 						<div class="card card-outline-secondary my-4">
 							<div class="card-header">
 								课程书目
@@ -192,8 +227,7 @@ $cover = $row['thumbnail'];
 						</div>
 						<!-- /.card -->
 
-					</div>
-					<!-- /.col-lg-9 -->
+					
 
 				</div>
 

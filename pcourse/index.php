@@ -131,14 +131,14 @@ $ads3 = $row['src'];
         <div class="col-lg-4">
           <h1>上淘课，选好课</h1>
           <p>淘课网致力于为每一位学生提供优质课程查询服务，在淘课网，您可以选择心仪的老师，您可以查看课程所需教材清单及电子资源，您还可以买卖教辅资料，发表您的课程评价！</p>
-         
-              <div class="input-group">
-                <input type="text" class="form-control" placeholder="走进性科学">
-                <span class="input-group-btn">
-                  <a class="btn btn-primary" href="course.php">淘课！</a>
-                </span>
-              </div>
-      
+         	  <form class="form-group" action="search.php" method="post">
+					<div class="input-group">
+					<input type="text" class="form-control" name="searchText" placeholder="走进性科学">
+					<span class="input-group-btn">
+                  		<a class="btn btn-primary" href="course.php">淘一淘！</a>
+                	</span>
+					</div>
+              </form>	
         </div>
         <!-- /.col-md-4 -->
       </div>
