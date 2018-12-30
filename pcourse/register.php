@@ -11,7 +11,7 @@ $errors=array();
 
 // connect to the database
 $db = mysqli_connect('localhost', 'students', 'password', 'course_site');
-
+mysqli_query($db, 'set names utf8');
 // REGISTER USER
 
   // receive all input values from the form
