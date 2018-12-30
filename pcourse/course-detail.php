@@ -1,27 +1,26 @@
 <?php
-header("Content-type:text/html;charset=utf-8"); 
+header("Content-type:text/html;charset=utf-8");
 
 // Establishing Connection with Server by passing server_name, user_id and password as a parameter
-$connection = new mysqli("localhost", "students", "password","course_site");
-mysqli_query($connection,'set names utf8');
-$errors="";
+$connection = new mysqli("localhost", "students", "password", "course_site");
+mysqli_query($connection, 'set names utf8');
+$errors = "";
 
-session_start();// Starting Session
+session_start();
+// Starting Session
 // Storing Session
-if(isset($_SESSION['user'])){
-$login_session =$_SESSION['user'];
+if (isset($_SESSION['user'])) {
+	$login_session = $_SESSION['user'];
 }
 
-if(isset($_SESSION['search'])){
-$search_session = $_SESSION['search'];
-}else{
-$search_session = 7;
+if (isset($_SESSION['search'])) {
+	$search_session = $_SESSION['search'];
+	$ses_sql = $connection -> query("select * from course where id = '$search_session'");
+	$row = $ses_sql -> fetch_assoc();
+	$coursename = $row['coursename'];
+	$info = $row['info'];
+	$cover = $row['thumbnail'];
 }
-$ses_sql=$connection->query("select * from course where id = '$search_session'");
-$row = $ses_sql->fetch_assoc();
-$coursename = $row['coursename'];
-$info = $row['info'];
-$cover = $row['thumbnail'];
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -37,10 +36,9 @@ $cover = $row['thumbnail'];
 
 		<!-- Bootstrap core CSS -->
 		<link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-
+		
 		<!-- Custom styles for this template -->
 		<link href="css/shop-item.css" rel="stylesheet">
-
 	</head>
 
 	<body>
@@ -64,7 +62,7 @@ $cover = $row['thumbnail'];
             	<a class="nav-link" data-toggle="modal" data-target="#login" href="">登录</a>
             </li>
 <?php
-	}else{
+}else{
 ?>					
 			<li class="nav-item dropdown">
         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -77,9 +75,9 @@ $cover = $row['thumbnail'];
           <a class="dropdown-item" href="logout.php">退出</a>
         </div>
       </li>
-<?php			
-	}
-?>
+<?php
+		}
+	?>
 						<li class="nav-item">
 							<a class="nav-link" href="About.php">关于</a>
 						</li>
@@ -120,8 +118,58 @@ $cover = $row['thumbnail'];
 						<div class="card-header">
 							课程评价
 						</div>
+
+						<div class="card-body">																					
+							<!-- Teachers Widget -->
+					          <div class="card card-outline-secondary my-4" id="class-comment">
+					            <h5 class="card-header">教师列表</h5>
+					            <div class="card-body">
+					              <div class="row">
+					                <div class="col-lg-12">
+					                  <!-- 胶囊菜单 -->
+									    <ul class="nav nav-pills">
+									    	<?php
+									    		$ses_sql=$connection->query("select teacher_name from courseteacher where course_id = '$search_session'");
+												while($row = $ses_sql->fetch_assoc()){ 
+									    	?>
+									    		<li class="nav-item">
+									        		<a class="nav-link" data-toggle="pill" href="#<?php echo $row['teacher_name']?>"><?php echo $row['teacher_name']?></a>
+									      		</li>
+									      	<?php	
+												}
+											?>									 
+									    </ul>
+									
+									    <!-- 菜单对应内容 -->
+									    <div class="tab-content">
+									    	<?php
+									    		$ses_sql=$connection->query("select teacher_name from courseteacher where course_id = '$search_session'");
+									    		while($row = $ses_sql->fetch_assoc()){ 
+									    			$teacher_name = $row['teacher_name'];
+									    	?>
+									    	<div class="tab-pane container" id="<?php echo $row['teacher_name']?>">
+									    	<?php		
+									    			$s_sql=$connection->query("select text, username, date from comment where course_id = '$search_session' AND teacher_name = '$teacher_name'");
+													while($result = $s_sql->fetch_assoc()){ 																										
+									    	?>		
+									    			<p><?php echo $result['text']?></p>
+													<small class="text-muted">Posted by <?php echo $result['username']?> on <?php echo $result['date']?></small>
+													<hr>																																												    		
+									      	<?php
+									      			}	
+									      	
+									      	?>
+									      	</div>	
+									      	<?php
+												}
+											?>										      									      
+									    </div>
+					                </div>
+					              </div>
+					            </div>
+					          </div>
+					          
 						<div class="card-body">
-							
 							<?php 
 								$ses_sql=$connection->query("select text, username, date from comment where course_id = '$search_session'");
 								while($row = $ses_sql->fetch_assoc()){
@@ -129,41 +177,10 @@ $cover = $row['thumbnail'];
 								<p><?php echo $row['text']?></p>
 								<small class="text-muted">Posted by <?php echo $row['username']?> on <?php echo $row['date']?></small>
 								<hr>
-							<?php	
-							}
+							<?php
+									}
 							?>
-							
-							
-							<!-- Teachers Widget -->
-					          <div class="card card-outline-secondary my-4" id="class-comment">
-					            <h5 class="card-header">教师列表</h5>
-					            <div class="card-body">
-					              <div class="row">
-					                <div class="col-lg-6">
-					                  <!-- 胶囊菜单 -->
-									    <ul class="nav nav-pills">
-									      <li class="nav-item">
-									        <a class="nav-link active" data-toggle="pill" href="#home">Python</a>
-									      </li>
-									      <li class="nav-item">
-									        <a class="nav-link" data-toggle="pill" href="#menu1">PHP</a>
-									      </li>
-									      <li class="nav-item">
-									        <a class="nav-link" data-toggle="pill" href="#menu2">Perl</a>
-									      </li>
-									    </ul>
-									
-									    <!-- 菜单对应内容 -->
-									    <div class="tab-content">
-									      <div class="tab-pane active container" id="home">Python 是一门解释型、面向对象、动态数据类型的高级程序设计语言</div>
-									      <div class="tab-pane container" id="menu1">PHP 是一种流行的通用脚本语言，特别适合 Web 开发</div>
-									      <div class="tab-pane container" id="menu2">Perl 又名实用报表提取语言， 是 Practical Extraction and Report Language 的缩写</div>
-									    </div>
-					                </div>
-					              </div>
-					            </div>
-					          </div>
-					          
+														
 							<div class="card my-4">
 								<h5 class="card-header">您的评价：</h5>
 								<div class="card-body">
@@ -188,7 +205,8 @@ $cover = $row['thumbnail'];
 						<!-- /.card -->
 					</div>
 					<!-- /.col-lg-9 -->
-					<a href="#" name="booklist"></a>
+						
+						<a href="#" name="booklist"></a>
 						<div class="card card-outline-secondary my-4">
 							<div class="card-header">
 								课程书目
@@ -200,8 +218,8 @@ $cover = $row['thumbnail'];
 								?>
 								<p><?php echo $row['bookname']?></p>
 								<hr>
-								<?php	
-								}
+								<?php
+									}
 								?>
 							</div>
 						</div>
@@ -220,14 +238,15 @@ $cover = $row['thumbnail'];
 								<a href="<?php echo $row['href']?>"><?php echo $row['resource_name']?></a>
 								<small class="text-muted">sumited on <?php echo $row['updatedate']?></small>
 								<hr>
-								<?php	
-								}
+								<?php
+									}
 								?>
 							</div>
 						</div>
 						<!-- /.card -->
 
-					
+					</div>
+					<!-- /.col-lg-9 -->
 
 				</div>
 
@@ -317,53 +336,52 @@ $cover = $row['thumbnail'];
 	            </div>
 	        </div>
 	    </div>
-<?php 
-	$connection->close(); // Closing Connection
-?>  
+<?php
+			$connection -> close();
+			// Closing Connection
+		?>  
 		<!-- Bootstrap core JavaScript -->
 		<script src="vendor/jquery/jquery.min.js"></script>
 		<script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-		<script>
-			$(function() {
-				/*
-				 * 鼠标点击，该元素包括该元素之前的元素获得样式,并给隐藏域input赋值
-				 * 鼠标移入，样式随鼠标移动
-				 * 鼠标移出，样式移除但被鼠标点击的该元素和之前的元素样式不变
-				 * 每次触发事件，移除所有样式，并重新获得样式
-				 * */
-				var stars = $('.stars');
-				var Len = stars.length;
-				//遍历每个评分的容器
-				for(i = 0; i < Len; i++) {
-					//每次触发事件，清除该项父容器下所有子元素的样式所有样式
-					function clearAll(obj) {
-						obj.parent().children('i').removeClass('on');
-					}
-					stars.eq(i).find('i').click(function() {
-						var num = $(this).index();
-						clearAll($(this));
-						//当前包括前面的元素都加上样式
-						$(this).addClass('on').prevAll('i').addClass('on');
-						//给隐藏域input赋值
-						$(this).siblings('input').val(num);
-					});
-					stars.eq(i).find('i').mouseover(function() {
-						var num = $(this).index();
-						clearAll($(this));
-						//当前包括前面的元素都加上样式
-						$(this).addClass('on').prevAll('i').addClass('on');
-					});
-					stars.eq(i).find('i').mouseout(function() {
-						clearAll($(this));
-						//触发点击事件后input有值
-						var score = $(this).siblings('input').val();
-						for(i = 0; i < score; i++) {
-							$(this).parent().find('i').eq(i).addClass('on');
-						}
-					});
-				}
-			})
-		</script>
+		<script>$(function() {
+	/*
+	 * 鼠标点击，该元素包括该元素之前的元素获得样式,并给隐藏域input赋值
+	 * 鼠标移入，样式随鼠标移动
+	 * 鼠标移出，样式移除但被鼠标点击的该元素和之前的元素样式不变
+	 * 每次触发事件，移除所有样式，并重新获得样式
+	 * */
+	var stars = $('.stars');
+	var Len = stars.length;
+	//遍历每个评分的容器
+	for(i = 0; i < Len; i++) {
+		//每次触发事件，清除该项父容器下所有子元素的样式所有样式
+		function clearAll(obj) {
+			obj.parent().children('i').removeClass('on');
+		}
+		stars.eq(i).find('i').click(function() {
+			var num = $(this).index();
+			clearAll($(this));
+			//当前包括前面的元素都加上样式
+			$(this).addClass('on').prevAll('i').addClass('on');
+			//给隐藏域input赋值
+			$(this).siblings('input').val(num);
+		});
+		stars.eq(i).find('i').mouseover(function() {
+			var num = $(this).index();
+			clearAll($(this));
+			//当前包括前面的元素都加上样式
+			$(this).addClass('on').prevAll('i').addClass('on');
+		});
+		stars.eq(i).find('i').mouseout(function() {
+			clearAll($(this));
+			//触发点击事件后input有值
+			var score = $(this).siblings('input').val();
+			for(i = 0; i < score; i++) {
+				$(this).parent().find('i').eq(i).addClass('on');
+			}
+		});
+	}
+})</script>
 	</body>
 
 </html>

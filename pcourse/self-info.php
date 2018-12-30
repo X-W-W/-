@@ -97,88 +97,74 @@ $ads3 = $row['src'];
     </nav>
 
     <!-- Page Content -->
-    <div class="container">
-
-      <!-- Heading Row -->
-      <div class="row my-4">
-        <div id="carouselExampleIndicators" class="carousel slide my-4 col-lg-8" data-ride="carousel" style="width: 100%;">
-            <ol class="carousel-indicators">
-              <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
-              <li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
-              <li data-target="#carouselExampleIndicators" data-slide-to="2"></li>
-            </ol>
-            <div class="carousel-inner" role="listbox">
-            	<div class="carousel-item active">
-                <img class="d-block img-fluid" src="<?php echo $ads1?>" alt="First slide">
-              </div>
-              <div class="carousel-item">
-                <img class="d-block img-fluid" src="<?php echo $ads2?>" alt="Second slide">
-              </div>
-              <div class="carousel-item">
-                <img class="d-block img-fluid" src="<?php echo $ads3?>" alt="Third slide">
-              </div>              
-            </div>
-            <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
-              <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-              <span class="sr-only">Previous</span>
-            </a>
-            <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
-              <span class="carousel-control-next-icon" aria-hidden="true"></span>
-              <span class="sr-only">Next</span>
-            </a>
-          </div>
-        <!-- /.col-lg-8 -->
-        <div class="col-lg-4">
-          <h1>上淘课，选好课</h1>
-          <p>淘课网致力于为每一位学生提供优质课程查询服务，在淘课网，您可以选择心仪的老师，您可以查看课程所需教材清单及电子资源，您还可以买卖教辅资料，发表您的课程评价！</p>
-
-         	  	<form class="form-group" action="search.php" method="post">
-					<div class="input-group">
-					<input type="text" class="form-control" name="searchText" placeholder="走进性科学">
-					<span class="input-group-btn">
-						<input class="btn btn-primary" type="submit" name="sub" id="searchBtn" value="淘一淘" />
-                	</span>
-					</div>
-            	</form>	
-      
-        </div>
-        <!-- /.col-md-4 -->
-      </div>
-      <!-- /.row -->
-			
-			<!-- Call to Action Well -->
-      <div class="card text-white bg-secondary my-4 text-center">
-        <div class="card-body">
-          <p class="text-white m-0">好文分享</p>
-        </div>
-      </div>
-      
-      <!-- Content Row -->
-      <div class="row">
-      	<?php
-      		for($index = 1;$index <= 3;$index++){
-      			$ses_sql=$connection->query("select title, abstract from article where label= '$index'");
-						$row = $ses_sql->fetch_assoc();
-						$atrt1 = $row['title'];
-						$atra1 = $row['abstract'];
-      	?>
-      	<div class="col-md-4 mb-4">
-          <div class="card h-100">
-            <div class="card-body">
-              <h2 class="card-title"><?php echo $atrt1;?></h2>
-              <p class="card-text"><?php echo $atra1?></p>
-            </div>
-            <div class="card-footer">
-              <a href="#" class="btn btn-primary">了解一下</a>
-            </div>
-          </div>
-        </div>
-        <!-- /.col-md-4 -->
-      	<?php
-      	}?>
-      </div>
-      <!-- /.row -->
-
+    <div class="container p-5">
+    	<div class="row">
+    		<div class="col-lg-3">
+    			<div class="nav flex-column nav-pills" id="v-pills-tab" role="tablist" aria-orientation="vertical">
+    				<a class="nav-link active" id="v-pills-info-tab" data-toggle="pill" href="#v-pills-info" role="tab" aria-controls="v-pills-info" aria-selected="true">
+    					个人信息
+    				</a>
+    				<a class="nav-link disabled" id="v-pills-history-tab" data-toggle="pill" href="#v-pills-history" role="tab" aria-controls="v-pills-history" aria-selected="false">
+    					历史查询记录
+    				</a>
+    			</div>
+    		</div>
+    		<div class="col-lg-9">
+    			<div class="tab-content" id="v-pills-tabContent">
+    				<div class="tab-pane fade show active" id="v-pills-info" role="tabpanel" aria-labelledby="v-pills-info-tab">
+    					<form method="post">
+    						<div class="form-group">
+    							<label for="nickname">昵称：</label>
+    							<span id="nickname">X_W_W_</span>
+    							<input type="text" class="form-control" id="nickname" placeholder="修改昵称">
+    						</div>
+    						<div class="form-group">
+    							<label for="Email">邮箱：</label>
+    							<span>123@qq.com</span>
+    							<input type="email" class="form-control" id="Email" aria-describedby="emailHelp" placeholder="修改邮箱">
+    							<small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
+    						</div>
+    						<div class="form-group">
+    							<label for="sex">性别：</label>
+    							<span>男</span>
+    							<select class="form-control" id="sex">
+    								<option>男</option>
+    								<option>女</option>
+    								<option>不公开</option>
+    							</select>
+    						</div>
+    						<div class="form-group">
+    							<label for="phone">手机：</label>
+    							<span>13888888888</span>
+    							<input type="text" class="form-control" id="exampleInputEmail1" placeholder="修改手机号">
+    							<small id="emailHelp" class="form-text text-muted">We'll never share your phone-number with anyone else.</small>
+    						</div>
+    						<div class="form-group">
+    							<label for="birthday">生日：</label>
+    							<span>1999/10/28</span>
+    							<input type="date" class="form-control" id="birthday" >
+    						</div>
+    						<div class="form-group">
+    							<label for="City">城市：</label>
+    							<span>广州</span>
+    							<input type="text" class="form-control" id="City" placeholder="城市" required>
+    						</div>
+    						<div class="justify-content-md-center row">
+	    						<button type="submit" class="btn btn-primary">
+	    						提交
+	    						</button>
+	    						<button type="reset" class="btn btn-primary">
+	    						重置
+	    						</button >
+    						</div>
+    					</form>
+    				</div>
+    				<div class="tab-pane fade" id="v-pills-history" role="tabpanel" aria-labelledby="v-pills-history-tab">
+    					Est quis nulla laborum officia ad nisi ex nostrud culpa Lorem excepteur aliquip dolor aliqua irure ex. Nulla ut duis ipsum nisi elit fugiat commodo sunt reprehenderit laborum veniam eu veniam. Eiusmod minim exercitation fugiat irure ex labore incididunt do fugiat commodo aliquip sit id deserunt reprehenderit aliquip nostrud. Amet ex cupidatat excepteur aute veniam incididunt mollit cupidatat esse irure officia elit do ipsum ullamco Lorem. Ullamco ut ad minim do mollit labore ipsum laboris ipsum commodo sunt tempor enim incididunt. Commodo quis sunt dolore aliquip aute tempor irure magna enim minim reprehenderit. Ullamco consectetur culpa veniam sint cillum aliqua incididunt velit ullamco sunt ullamco quis quis commodo voluptate. Mollit nulla nostrud adipisicing aliqua cupidatat aliqua pariatur mollit voluptate voluptate consequat non.
+    				</div>
+    			</div>
+    		</div>
+    	</div>
     </div>
     <!-- /.container -->
 
