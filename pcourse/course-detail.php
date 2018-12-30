@@ -48,36 +48,36 @@ if (isset($_SESSION['search'])) {
 			<div class="container">
 				<a class="navbar-brand" href="course.php">淘课</a>
 				<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
-          <span class="navbar-toggler-icon"></span>
-        </button>
+          		<span class="navbar-toggler-icon"></span>
+        		</button>
 				<div class="collapse navbar-collapse" id="navbarResponsive">
 					<ul class="navbar-nav ml-auto">
 						<li class="nav-item">
 							<a class="nav-link" href="index.php">首页</a>
 						</li>
-<?php 
-	if(!isset($login_session)){
-?>
-            <li class="nav-item">
-            	<a class="nav-link" data-toggle="modal" data-target="#login" href="">登录</a>
-            </li>
-<?php
-}else{
-?>					
-			<li class="nav-item dropdown">
-        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-          <?php echo $login_session; ?>
-        </a>
-        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-          <a class="dropdown-item" href="#">个人信息</a>
-          <a class="dropdown-item" href="#">消息</a>
-          <div class="dropdown-divider"></div>
-          <a class="dropdown-item" href="logout.php">退出</a>
-        </div>
-      </li>
-<?php
-		}
-	?>
+						<?php 
+						if(!isset($login_session)){
+						?>
+            			<li class="nav-item">
+            				<a class="nav-link" data-toggle="modal" data-target="#login" href="">登录</a>
+            			</li>
+						<?php
+						}else{
+						?>					
+						<li class="nav-item dropdown">
+        				<a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          				<?php echo $login_session; ?>
+        				</a>
+        				<div class="dropdown-menu" aria-labelledby="navbarDropdown">
+         	 				<a class="dropdown-item" href="#">个人信息</a>
+          					<a class="dropdown-item" href="#">消息</a>
+          					<div class="dropdown-divider"></div>
+          					<a class="dropdown-item" href="logout.php">退出</a>
+        				</div>
+      					</li>
+						<?php
+						}
+						?>
 						<li class="nav-item">
 							<a class="nav-link" href="About.php">关于</a>
 						</li>
@@ -88,9 +88,7 @@ if (isset($_SESSION['search'])) {
 
 		<!-- Page Content -->
 		<div class="container">
-
 			<div class="row">
-
 				<div class="col-lg-3">
 					<h1 class="my-4"><?php echo $coursename?></h1>
 					<div class="list-group">
@@ -102,7 +100,6 @@ if (isset($_SESSION['search'])) {
 				<!-- /.col-lg-3 -->
 
 				<div class="col-lg-9">
-
 					<div class="card mt-4" id="class-info">
 						<img class="card-img-top img-fluid" src="<?php echo $cover?>" alt="">
 						<div class="card-body">
@@ -118,8 +115,6 @@ if (isset($_SESSION['search'])) {
 						<div class="card-header">
 							课程评价
 						</div>
-
-
 						<div class="card-body">																					
 							<!-- Teachers Widget -->
 					          <div class="card card-outline-secondary my-4" id="class-comment">
@@ -169,18 +164,29 @@ if (isset($_SESSION['search'])) {
 					              </div>
 					            </div>
 					          </div>
-					         
 						
-
-							
 							<a href="#" name="booklist"></a>
 
 							<div class="card my-4">
 								<h5 class="card-header">您的评价：</h5>
 								<div class="card-body">
-									<form>
+									<form action="comment.php" method="post">
 										<div class="form-group">
-											<textarea class="form-control"  rows="3"></textarea>
+										<label for="sel1">选择老师:</label>
+									      <select class="form-control" name="sel1">
+									      	<?php
+									    		$ses_sql=$connection->query("select teacher_name from courseteacher where course_id = '$search_session'");
+												while($row = $ses_sql->fetch_assoc()){ 
+									    	?>
+									    	<option value="<?php echo $row['teacher_name']?>"><?php echo $row['teacher_name']?></option>									   
+									      	<?php	
+												}
+											?>	
+									      </select>
+									      <br />
+										
+											<textarea class="form-control" name="text" rows="3"></textarea>
+											
 											<div class="stars">
 												<span>评分：</span>
 												<i>★</i>
@@ -196,10 +202,9 @@ if (isset($_SESSION['search'])) {
 								</div>
 							</div>
 						
-						<!-- /.card -->
-
-					</div>
-					<!-- /.col-lg-9 -->
+							<!-- /.card -->
+						</div>
+						<!-- /.col-lg-9 -->
 					</div>
 					<!-- /.col-lg-9 -->
 						
