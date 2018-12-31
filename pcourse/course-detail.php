@@ -345,6 +345,7 @@ if (isset($_SESSION['search'])) {
 		<!-- Bootstrap core JavaScript -->
 		<script src="vendor/jquery/jquery.min.js"></script>
 		<script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+		<script type="text/javascript" src="js/background.js" ></script>
 		<script>$(function() {
 	/*
 	 * 鼠标点击，该元素包括该元素之前的元素获得样式,并给隐藏域input赋值

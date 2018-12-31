@@ -255,6 +255,7 @@ $ads3 = $row['src'];
     <!-- Bootstrap core JavaScript -->
     <script src="vendor/jquery/jquery.min.js"></script>
     <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script type="text/javascript" src="js/background.js" ></script>
   </body>
 
 </html>
