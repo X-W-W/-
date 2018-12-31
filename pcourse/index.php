@@ -79,7 +79,7 @@ $ads3 = $row['src'];
           <?php echo $login_session; ?>
         </a>
         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-          <a class="dropdown-item" href="#">个人信息</a>
+          <a class="dropdown-item" href="self-info.php">个人信息</a>
           <a class="dropdown-item" href="#">消息</a>
           <div class="dropdown-divider"></div>
           <a class="dropdown-item" href="logout.php">退出</a>

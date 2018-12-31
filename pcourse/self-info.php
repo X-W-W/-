@@ -12,13 +12,11 @@ if(isset($_SESSION['user'])){
 $login_session =$_SESSION['user'];
 }
 
-// SQL Query To Fetch Ad
-$index = 1;
-$ses_sql=$connection->query("select src from advertisement where label= '$index'");
+// SQL Query To Self-info
+$ses_sql=$connection->query("select email from login where label= '$login_session'");
 $row = $ses_sql->fetch_assoc();
-$ads1 = $row['src'];
+$email = $row['email'];
 
-$index = 2;
 $ses_sql=$connection->query("select src from advertisement where label= '$index'");
 $row = $ses_sql->fetch_assoc();
 $ads2 = $row['src'];
@@ -79,7 +77,7 @@ $ads3 = $row['src'];
           <?php echo $login_session; ?>
         </a>
         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-          <a class="dropdown-item" href="#">个人信息</a>
+          <a class="dropdown-item" href="self-info.php">个人信息</a>
           <a class="dropdown-item" href="#">消息</a>
           <div class="dropdown-divider"></div>
           <a class="dropdown-item" href="logout.php">退出</a>
@@ -115,12 +113,12 @@ $ads3 = $row['src'];
     					<form method="post">
     						<div class="form-group">
     							<label for="nickname">昵称：</label>
-    							<span id="nickname">X_W_W_</span>
+    							<span id="nickname"><?php echo $login_session; ?></span>
     							<input type="text" class="form-control" id="nickname" placeholder="修改昵称">
     						</div>
     						<div class="form-group">
     							<label for="Email">邮箱：</label>
-    							<span>123@qq.com</span>
+    							<span><?php echo $login_session; ?></span>
     							<input type="email" class="form-control" id="Email" aria-describedby="emailHelp" placeholder="修改邮箱">
     							<small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
     						</div>
