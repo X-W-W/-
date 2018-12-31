@@ -18,6 +18,9 @@ input.btn {
 	transition: box-shadow .3s;
 }
 
+input.btn:hover{
+	background: #fe4365;
+}
 input.btn:hover,
 input.btn:focus {
 	-webkit-box-shadow: 0 0 0 2px #cff09e, 0 0 0 4px #ff0364;
@@ -26,7 +29,7 @@ input.btn:focus {
 	transition-timing-function: cubic-bezier(0.6, 4, 0.3, 0.8);
 	-webkit-animation: gelatine 0.5s 1;
 	animation: gelatine 0.5s 1;
-	
+	background: #fe4365;
 	/* -webkit-box-shadow: 0 0 0 2px #cff09e, 0 0 0 4px #ff0364;
   box-shadow: 0 0 0 2px #cff09e, 0 0 0 4px #ff0364;
   -webkit-transition-timing-function: cubic-bezier(0.6, 4, 0.3, 0.8);
