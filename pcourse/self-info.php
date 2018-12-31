@@ -150,12 +150,8 @@ $ads3 = $row['src'];
     							<input type="text" class="form-control" id="City" placeholder="城市" required>
     						</div>
     						<div class="justify-content-md-center row">
-	    						<button type="submit" class="btn btn-primary">
-	    						提交
-	    						</button>
-	    						<button type="reset" class="btn btn-primary">
-	    						重置
-	    						</button >
+	    						<button type="submit" class="btn btn-primary col-sm-5" style="margin: 10px;">提交</button>
+	    						<button type="reset" class="btn btn-primary col-sm-5" style="margin: 10px;">重置</button >
     						</div>
     					</form>
     				</div>

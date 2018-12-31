@@ -7,12 +7,12 @@ input.btn {
 	text-decoration: none;
 	outline: none;
 	color: #fff;
-	background-color: #fe4365;
+	background-color: #007bff;
 	border-radius: 3px;
 	-webkit-background-clip: padding-box;
 	background-clip: padding-box;
-	-webkit-box-shadow: 0 0 0 -2px #cff09e, 0 0 0 -1px #fe4365;
-	box-shadow: 0 0 0 -2px #cff09e, 0 0 0 -1px #fe4365;
+	-webkit-box-shadow: 0 0 0 -2px #cff09e, 0 0 0 -1px #007bff;
+	box-shadow: 0 0 0 -2px #cff09e, 0 0 0 -1px #007bff;
 	border: none;
 	-webkit-transition: -webkit-box-shadow .3s;
 	transition: box-shadow .3s;
@@ -26,6 +26,7 @@ input.btn:focus {
 	transition-timing-function: cubic-bezier(0.6, 4, 0.3, 0.8);
 	-webkit-animation: gelatine 0.5s 1;
 	animation: gelatine 0.5s 1;
+	
 	/* -webkit-box-shadow: 0 0 0 2px #cff09e, 0 0 0 4px #ff0364;
   box-shadow: 0 0 0 2px #cff09e, 0 0 0 4px #ff0364;
   -webkit-transition-timing-function: cubic-bezier(0.6, 4, 0.3, 0.8);
@@ -35,7 +36,7 @@ input.btn:focus {
 }
 
 input.btn:active {
-	background: #4ecdc4;
+	background: #fe4365;
 	-webkit-transition-duration: 0;
 	transition-duration: 0;
 	-webkit-box-shadow: 0 0 0 2px #cff09e, 0 0 0 4px #3ac7bd;

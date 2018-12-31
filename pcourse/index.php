@@ -137,7 +137,7 @@ $ads3 = $row['src'];
 					<div class="input-group">
 					<input type="text" class="form-control" name="searchText" placeholder="走进性科学"  >
 					<span class="input-group-btn">
-						<input id="loginBtn" class="btn btn-primary" type="submit" name="sub" id="searchBtn" value="淘一淘" style="cursor:pointer;" ng-click="loginBtn()" />
+						<input id="loginBtn" class="btn" type="submit" name="sub" id="searchBtn" value="淘一淘" style="cursor:pointer;" ng-click="loginBtn()" />
                 	</span>
 					</div>
             	</form>	
