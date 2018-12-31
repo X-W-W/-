@@ -11,27 +11,11 @@ session_start();// Starting Session
 if(isset($_SESSION['user'])){
 $login_session =$_SESSION['user'];
 }
-
-// SQL Query To Fetch Ad
-$index = 1;
-$ses_sql=$connection->query("select src from advertisement where label= '$index'");
-$row = $ses_sql->fetch_assoc();
-$ads1 = $row['src'];
-
-$index = 2;
-$ses_sql=$connection->query("select src from advertisement where label= '$index'");
-$row = $ses_sql->fetch_assoc();
-$ads2 = $row['src'];
-
-$index = 3;
-$ses_sql=$connection->query("select src from advertisement where label= '$index'");
-$row = $ses_sql->fetch_assoc();
-$ads3 = $row['src'];
 ?>
 
 <!DOCTYPE html>
-<html>
-	
+<html lang="en">
+
   <head>
 
     <meta charset="utf-8">
@@ -39,14 +23,14 @@ $ads3 = $row['src'];
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>选好课，上淘课 - 淘课</title>
+    <title>好文分享 - 淘课</title>
 
     <!-- Bootstrap core CSS -->
     <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
 
     <!-- Custom styles for this template -->
-    <link href="css/index.css" rel="stylesheet">
-	<link href="css/button.css" rel="stylesheet">
+    <link href="css/blog-post.css" rel="stylesheet">
+
   </head>
 
   <body>
@@ -99,84 +83,163 @@ $ads3 = $row['src'];
     <!-- Page Content -->
     <div class="container">
 
-      <!-- Heading Row -->
-      <div class="row my-4">
-        <div id="carouselExampleIndicators" class="carousel slide my-4 col-lg-8" data-ride="carousel" style="width: 100%;">
-            <ol class="carousel-indicators">
-              <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
-              <li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
-              <li data-target="#carouselExampleIndicators" data-slide-to="2"></li>
-            </ol>
-            <div class="carousel-inner" role="listbox">
-            	<div class="carousel-item active">
-                <img class="d-block img-fluid" src="<?php echo $ads1?>" alt="First slide">
-              </div>
-              <div class="carousel-item">
-                <img class="d-block img-fluid" src="<?php echo $ads2?>" alt="Second slide">
-              </div>
-              <div class="carousel-item">
-                <img class="d-block img-fluid" src="<?php echo $ads3?>" alt="Third slide">
-              </div>              
-            </div>
-            <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
-              <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-              <span class="sr-only">Previous</span>
-            </a>
-            <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
-              <span class="carousel-control-next-icon" aria-hidden="true"></span>
-              <span class="sr-only">Next</span>
-            </a>
-          </div>
-        <!-- /.col-lg-8 -->
-        <div class="col-lg-4">
-          <h1>上淘课，选好课</h1>
-          <p>淘课网致力于为每一位学生提供优质课程查询服务，在淘课网，您可以选择心仪的老师，您可以查看课程所需教材清单及电子资源，您还可以买卖教辅资料，发表您的课程评价！</p>
-
-
-         	  	<form class="form-group" action="search.php" method="post">
-					<div class="input-group">
-					<input type="text" class="form-control" name="searchText" placeholder="走进性科学"  >
-					<span class="input-group-btn">
-						<input id="loginBtn" class="btn btn-primary" type="submit" name="sub" id="searchBtn" value="淘一淘" style="cursor:pointer;" ng-click="loginBtn()" />
-                	</span>
-					</div>
-            	</form>	
-      
-        </div>
-        <!-- /.col-md-4 -->
-      </div>
-      <!-- /.row -->
-			
-			<!-- Call to Action Well -->
-      <div class="card text-white bg-secondary my-4 text-center">
-        <div class="card-body">
-          <p class="text-white m-0">好文分享</p>
-        </div>
-      </div>
-      
-      <!-- Content Row -->
       <div class="row">
-      	<?php
-      		for($index = 1;$index <= 3;$index++){
-      			$ses_sql=$connection->query("select title, abstract from article where label= '$index'");
-						$row = $ses_sql->fetch_assoc();
-						$atrt1 = $row['title'];
-						$atra1 = $row['abstract'];
-      	?>
-      	<div class="col-md-4 mb-4">
-          <div class="card h-100">
+
+        <!-- Post Content Column -->
+        <div class="col-lg-8">
+
+          <!-- Title -->
+          <h1 class="mt-4">Post Title</h1>
+
+          <!-- Author -->
+          <p class="lead">
+            by
+            <a href="#">pcourse</a>
+          </p>
+
+          <hr>
+
+          <!-- Date/Time -->
+          <p>Posted on January 1, 2018 at 12:00 PM</p>
+
+          <hr>
+
+          <!-- Preview Image -->
+          <img class="img-fluid rounded" src="http://placehold.it/900x300" alt="">
+
+          <hr>
+
+          <!-- Post Content -->
+          <p class="lead">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ducimus, vero, obcaecati, aut, error quam sapiente nemo saepe quibusdam sit excepturi nam quia corporis eligendi eos magni recusandae laborum minus inventore?</p>
+
+          <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ut, tenetur natus doloremque laborum quos iste ipsum rerum obcaecati impedit odit illo dolorum ab tempora nihil dicta earum fugiat. Temporibus, voluptatibus.</p>
+
+          <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eos, doloribus, dolorem iusto blanditiis unde eius illum consequuntur neque dicta incidunt ullam ea hic porro optio ratione repellat perspiciatis. Enim, iure!</p>
+
+          <blockquote class="blockquote">
+            <p class="mb-0">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer posuere erat a ante.</p>
+            <footer class="blockquote-footer">Someone famous in
+              <cite title="Source Title">Source Title</cite>
+            </footer>
+          </blockquote>
+
+          <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Error, nostrum, aliquid, animi, ut quas placeat totam sunt tempora commodi nihil ullam alias modi dicta saepe minima ab quo voluptatem obcaecati?</p>
+
+          <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Harum, dolor quis. Sunt, ut, explicabo, aliquam tenetur ratione tempore quidem voluptates cupiditate voluptas illo saepe quaerat numquam recusandae? Qui, necessitatibus, est!</p>
+
+          <hr>
+
+          <!-- Comments Form -->
+          <div class="card my-4">
+            <h5 class="card-header">Leave a Comment:</h5>
             <div class="card-body">
-              <h2 class="card-title"><?php echo $atrt1;?></h2>
-              <p class="card-text"><?php echo $atra1?></p>
-            </div>
-            <div class="card-footer">
-              <a href="article.php" class="btn btn-primary">了解一下</a>
+              <form>
+                <div class="form-group">
+                  <textarea class="form-control" rows="3"></textarea>
+                </div>
+                <button type="submit" class="btn btn-primary">Submit</button>
+              </form>
             </div>
           </div>
+
+          <!-- Single Comment -->
+          <div class="media mb-4">
+            <img class="d-flex mr-3 rounded-circle" src="http://placehold.it/50x50" alt="">
+            <div class="media-body">
+              <h5 class="mt-0">Commenter Name</h5>
+              Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin. Cras purus odio, vestibulum in vulputate at, tempus viverra turpis. Fusce condimentum nunc ac nisi vulputate fringilla. Donec lacinia congue felis in faucibus.
+            </div>
+          </div>
+
+          <!-- Comment with nested comments -->
+          <div class="media mb-4">
+            <img class="d-flex mr-3 rounded-circle" src="http://placehold.it/50x50" alt="">
+            <div class="media-body">
+              <h5 class="mt-0">Commenter Name</h5>
+              Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin. Cras purus odio, vestibulum in vulputate at, tempus viverra turpis. Fusce condimentum nunc ac nisi vulputate fringilla. Donec lacinia congue felis in faucibus.
+
+              <div class="media mt-4">
+                <img class="d-flex mr-3 rounded-circle" src="http://placehold.it/50x50" alt="">
+                <div class="media-body">
+                  <h5 class="mt-0">Commenter Name</h5>
+                  Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin. Cras purus odio, vestibulum in vulputate at, tempus viverra turpis. Fusce condimentum nunc ac nisi vulputate fringilla. Donec lacinia congue felis in faucibus.
+                </div>
+              </div>
+
+              <div class="media mt-4">
+                <img class="d-flex mr-3 rounded-circle" src="http://placehold.it/50x50" alt="">
+                <div class="media-body">
+                  <h5 class="mt-0">Commenter Name</h5>
+                  Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin. Cras purus odio, vestibulum in vulputate at, tempus viverra turpis. Fusce condimentum nunc ac nisi vulputate fringilla. Donec lacinia congue felis in faucibus.
+                </div>
+              </div>
+
+            </div>
+          </div>
+
         </div>
-        <!-- /.col-md-4 -->
-      	<?php
-      	}?>
+
+        <!-- Sidebar Widgets Column -->
+        <div class="col-md-4">
+
+          <!-- Search Widget -->
+          <div class="card my-4">
+            <h5 class="card-header">Search</h5>
+            <div class="card-body">
+              <div class="input-group">
+                <input type="text" class="form-control" placeholder="Search for...">
+                <span class="input-group-btn">
+                  <button class="btn btn-secondary" type="button">Go!</button>
+                </span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Categories Widget -->
+          <div class="card my-4">
+            <h5 class="card-header">Categories</h5>
+            <div class="card-body">
+              <div class="row">
+                <div class="col-lg-6">
+                  <ul class="list-unstyled mb-0">
+                    <li>
+                      <a href="#">Web Design</a>
+                    </li>
+                    <li>
+                      <a href="#">HTML</a>
+                    </li>
+                    <li>
+                      <a href="#">Freebies</a>
+                    </li>
+                  </ul>
+                </div>
+                <div class="col-lg-6">
+                  <ul class="list-unstyled mb-0">
+                    <li>
+                      <a href="#">JavaScript</a>
+                    </li>
+                    <li>
+                      <a href="#">CSS</a>
+                    </li>
+                    <li>
+                      <a href="#">Tutorials</a>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Side Widget -->
+          <div class="card my-4">
+            <h5 class="card-header">Side Widget</h5>
+            <div class="card-body">
+              You can put anything you want inside of these side widgets. They are easy to use, and feature the new Bootstrap 4 card containers!
+            </div>
+          </div>
+
+        </div>
+
       </div>
       <!-- /.row -->
 
@@ -190,8 +253,8 @@ $ads3 = $row['src'];
       </div>
       <!-- /.container -->
     </footer>
-    
-		<!-- 注册窗口 -->
+	
+			<!-- 注册窗口 -->
     <div id="register" class="modal fade" tabindex="-1">
         <div class="modal-dialog">
             <div class="modal-content">
@@ -267,10 +330,11 @@ $ads3 = $row['src'];
 <?php 
 	$connection->close(); // Closing Connection
 ?>  
+
     <!-- Bootstrap core JavaScript -->
     <script src="vendor/jquery/jquery.min.js"></script>
     <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-    <script type="text/javascript" src="js/background.js" ></script>
+
   </body>
 
 </html>

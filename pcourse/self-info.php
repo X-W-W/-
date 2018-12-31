@@ -39,7 +39,7 @@ $ads3 = $row['src'];
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>选好课，上淘课 - 淘课</title>
+    <title>个人信息 - 淘课</title>
 
     <!-- Bootstrap core CSS -->
     <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
