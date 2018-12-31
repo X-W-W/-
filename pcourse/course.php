@@ -30,7 +30,7 @@ $login_session =$_SESSION['user'];
 
 		<!-- Custom styles for this template -->
 		<link href="css/3-col-portfolio.css" rel="stylesheet">
-
+		<link rel="stylesheet" href="css/button.css" />
 	</head>
 
 	<body>
@@ -92,7 +92,7 @@ $login_session =$_SESSION['user'];
 					<div class="input-group">
 					<input type="text" class="form-control" name="searchText" placeholder="走进性科学">
 					<span class="input-group-btn">
-						<input class="btn btn-primary" type="submit" name="sub" id="searchBtn" value="淘一淘" />
+						<input id="loginBtn" class="btn btn-primary" type="submit" name="sub" id="searchBtn" value="淘一淘" style="cursor:pointer;" ng-click="loginBtn()" />
           			</span>
 					</div>
             	</form>	

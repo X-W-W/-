@@ -46,7 +46,7 @@ $ads3 = $row['src'];
 
     <!-- Custom styles for this template -->
     <link href="css/index.css" rel="stylesheet">
-
+	<link href="css/button.css" rel="stylesheet">
   </head>
 
   <body>
@@ -135,9 +135,9 @@ $ads3 = $row['src'];
 
          	  	<form class="form-group" action="search.php" method="post">
 					<div class="input-group">
-					<input type="text" class="form-control" name="searchText" placeholder="走进性科学">
+					<input type="text" class="form-control" name="searchText" placeholder="走进性科学"  >
 					<span class="input-group-btn">
-						<input class="btn btn-primary" type="submit" name="sub" id="searchBtn" value="淘一淘" />
+						<input id="loginBtn" class="btn btn-primary" type="submit" name="sub" id="searchBtn" value="淘一淘" style="cursor:pointer;" ng-click="loginBtn()" />
                 	</span>
 					</div>
             	</form>	
