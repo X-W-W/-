@@ -13,18 +13,9 @@ $login_session =$_SESSION['user'];
 }
 
 // SQL Query To Self-info
-$ses_sql=$connection->query("select email from login where label= '$login_session'");
+$ses_sql=$connection->query("select email from login where username= '$login_session'");
 $row = $ses_sql->fetch_assoc();
 $email = $row['email'];
-
-$ses_sql=$connection->query("select src from advertisement where label= '$index'");
-$row = $ses_sql->fetch_assoc();
-$ads2 = $row['src'];
-
-$index = 3;
-$ses_sql=$connection->query("select src from advertisement where label= '$index'");
-$row = $ses_sql->fetch_assoc();
-$ads3 = $row['src'];
 ?>
 
 <!DOCTYPE html>
@@ -118,7 +109,7 @@ $ads3 = $row['src'];
     						</div>
     						<div class="form-group">
     							<label for="Email">邮箱：</label>
-    							<span><?php echo $login_session; ?></span>
+    							<span><?php echo $email; ?></span>
     							<input type="email" class="form-control" id="Email" aria-describedby="emailHelp" placeholder="修改邮箱">
     							<small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
     						</div>
