@@ -105,7 +105,7 @@ $login_session =$_SESSION['user'];
           <hr>
 
           <!-- Preview Image -->
-          <img class="img-fluid rounded" src="http://placehold.it/900x300" alt="">
+          <img class="img-fluid rounded" src="img/shenzhen.jpg" alt="">
 
           <hr>
 
