@@ -14,9 +14,13 @@ $password = mysqli_real_escape_string($db, $_POST['password']);
 
   if (empty($username)) {
   	array_push($errors, "Username is required");
+  	$_SESSION['logerror'] = "请输入用户名";
+  	header('location: index.php');
   }
   if (empty($password)) {
   	array_push($errors, "Password is required");
+  	$_SESSION['logerror'] = "请输入密码";
+  	header('location: index.php');
   }
 
   if (count($errors) == 0) {
@@ -29,6 +33,8 @@ $password = mysqli_real_escape_string($db, $_POST['password']);
   	  header('location: index.php');
   	}else {
   		array_push($errors, "Wrong username/password combination");
+  		$_SESSION['logerror'] = "用户名或密码错误";
+  		header('location: index.php');
   	}
   }
 ?>

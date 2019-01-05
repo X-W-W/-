@@ -14,6 +14,7 @@ $searchText = mysqli_real_escape_string($db, $_POST['searchText']);
 
   if (empty($searchText)) {
   	array_push($errors, "searchText is required");
+  	$_SESSION['error'] = "请输入课程名";
   	header('location: course.php');
   }
 
@@ -25,10 +26,11 @@ $searchText = mysqli_real_escape_string($db, $_POST['searchText']);
 
   	if (mysqli_num_rows($results) == 1) {
   	  $_SESSION['search'] = $searchResult['id'];
-  	  $_SESSION['success'] = "You are now logged in";
   	  header('location: course-detail.php');
   	}else {
-		array_push($errors, "Sorry, No such record");
+			array_push($errors, "Sorry, No such record");
+			$_SESSION['error'] = "暂无该课程信息";
+			header('location: course.php');
   	}
   }
 ?>

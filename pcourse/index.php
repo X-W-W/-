@@ -11,6 +11,10 @@ session_start();// Starting Session
 if(isset($_SESSION['user'])){
 $login_session =$_SESSION['user'];
 }
+if(isset($_SESSION['logerror'])){
+$errors=$_SESSION['logerror'];
+$_SESSION['logerror']="";
+}
 
 // SQL Query To Fetch Ad
 $index = 1;
@@ -138,8 +142,9 @@ $ads3 = $row['src'];
 					<input type="text" class="form-control" name="searchText" placeholder="走进性科学"  >
 					<span class="input-group-btn">
 						<input id="loginBtn" class="btn" type="submit" name="sub" id="searchBtn" value="淘一淘" style="cursor:pointer;" ng-click="loginBtn()" />
-                	</span>
+                	</span>      
 					</div>
+					<span><?php echo $errors?></span>
             	</form>	
       
         </div>

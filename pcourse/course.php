@@ -11,6 +11,11 @@ session_start();// Starting Session
 if(isset($_SESSION['user'])){
 $login_session =$_SESSION['user'];
 }
+
+if(isset($_SESSION['error'])){
+$errors=$_SESSION['error'];
+$_SESSION['error']="";
+}
 ?>
 
 <!DOCTYPE html>
@@ -95,6 +100,7 @@ $login_session =$_SESSION['user'];
 						<input id="loginBtn" class="btn btn-primary" type="submit" name="sub" id="searchBtn" value="淘一淘" style="cursor:pointer;" ng-click="loginBtn()" />
           			</span>
 					</div>
+					<span><?php echo $errors?></span>
             	</form>	
 			</div>
 
